@@ -3,7 +3,7 @@
 	"name": "Dynamic Home",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "A visually rich, dynamic homepage for Obsidian with multiple visual modes including random images, matrix rain, ambient particles, and more.",
-	"author": "Dynamic Home",
+	"description": "A visually rich, dynamic homepage with multiple visual modes including random images, image gallery, matrix rain, ambient particles, and a clock greeting.",
+	"author": "declanhuggins",
 	"isDesktopOnly": false
 }
