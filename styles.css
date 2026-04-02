@@ -1,0 +1,379 @@
+/* ============================================
+   Dynamic Home Plugin
+   ============================================ */
+
+/* Root & Container */
+.dh-root {
+	padding: 0 !important;
+	overflow: hidden;
+}
+
+.dh-container {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	--dh-accent: #7c3aed;
+}
+
+/* Background layer */
+.dh-background {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+
+/* Overlay layer — all text content lives here */
+.dh-overlay {
+	position: absolute;
+	inset: 0;
+	z-index: 10;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	pointer-events: none;
+}
+
+.dh-overlay-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+	max-width: 560px;
+	width: 100%;
+	padding: 32px 32px 48px;
+	pointer-events: auto;
+}
+
+/* Clock mode keeps content centered */
+.dh-mode-clock .dh-overlay {
+	align-items: center;
+}
+
+/* ============================================
+   Clock & Greeting (in overlay, all modes)
+   ============================================ */
+.dh-overlay-clock {
+	text-align: center;
+	margin-bottom: 4px;
+}
+
+.dh-overlay-time {
+	font-size: 4.5rem;
+	font-weight: 100;
+	color: #fff;
+	letter-spacing: 0.05em;
+	text-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+	line-height: 1.1;
+}
+
+/* Large variant for Clock & Greeting mode */
+.dh-overlay-time-large {
+	font-size: 8rem;
+	text-shadow: 0 0 60px rgba(255, 255, 255, 0.15);
+	line-height: 1;
+}
+
+.dh-overlay-seconds {
+	font-size: 1.4rem;
+	font-weight: 300;
+	color: rgba(255, 255, 255, 0.3);
+	letter-spacing: 0.2em;
+	margin-top: 4px;
+}
+
+.dh-overlay-greeting-text {
+	font-size: 1.3rem;
+	font-weight: 300;
+	color: rgba(255, 255, 255, 0.8);
+	margin-top: 8px;
+}
+
+.dh-overlay-greeting-large {
+	font-size: 1.8rem;
+	margin-top: 16px;
+}
+
+.dh-overlay-date {
+	font-size: 1rem;
+	color: rgba(255, 255, 255, 0.5);
+	margin-top: 4px;
+}
+
+/* ============================================
+   Search
+   ============================================ */
+.dh-search-section {
+	width: 100%;
+	position: relative;
+}
+
+.dh-search-wrapper {
+	display: flex;
+	align-items: center;
+	background: rgba(255, 255, 255, 0.08);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 12px;
+	padding: 10px 16px;
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	transition: background 0.2s, border-color 0.2s;
+}
+
+.dh-search-wrapper:focus-within {
+	background: rgba(255, 255, 255, 0.12);
+	border-color: var(--dh-accent);
+}
+
+.dh-search-icon {
+	color: rgba(255, 255, 255, 0.5);
+	margin-right: 10px;
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+}
+
+.dh-search-input {
+	background: none;
+	border: none;
+	outline: none;
+	color: #fff;
+	font-size: 1rem;
+	width: 100%;
+	font-family: inherit;
+}
+
+.dh-search-input::placeholder {
+	color: rgba(255, 255, 255, 0.4);
+}
+
+.dh-search-results {
+	margin-top: 4px;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.dh-search-result-item {
+	padding: 8px 16px;
+	color: rgba(255, 255, 255, 0.85);
+	font-size: 0.9rem;
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.06);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+	transition: background 0.15s;
+}
+
+.dh-search-result-item:hover {
+	background: rgba(255, 255, 255, 0.12);
+}
+
+.dh-search-result-item:last-child {
+	border-bottom: none;
+}
+
+/* ============================================
+   Quick Links
+   ============================================ */
+.dh-quick-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	justify-content: center;
+}
+
+.dh-quick-link {
+	padding: 6px 16px;
+	background: rgba(255, 255, 255, 0.08);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 20px;
+	color: rgba(255, 255, 255, 0.85);
+	font-size: 0.85rem;
+	cursor: pointer;
+	transition: background 0.2s, border-color 0.2s;
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+}
+
+.dh-quick-link:hover {
+	background: rgba(255, 255, 255, 0.15);
+	border-color: var(--dh-accent);
+}
+
+/* ============================================
+   Recent Files
+   ============================================ */
+.dh-recent-section {
+	width: 100%;
+	margin-top: 4px;
+}
+
+.dh-recent-title {
+	font-size: 0.7rem;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	color: rgba(255, 255, 255, 0.35);
+	margin-bottom: 6px;
+	text-align: center;
+}
+
+.dh-recent-list {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.dh-recent-item {
+	padding: 7px 16px;
+	color: rgba(255, 255, 255, 0.65);
+	font-size: 0.85rem;
+	cursor: pointer;
+	transition: background 0.15s, color 0.15s;
+	text-align: center;
+	border-radius: 6px;
+}
+
+.dh-recent-item:hover {
+	background: rgba(255, 255, 255, 0.08);
+	color: #fff;
+}
+
+/* ============================================
+   Mode: Clock & Greeting (background only)
+   ============================================ */
+.dh-clock-mode-bg {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(135deg, #0f0c29 0%, #1a1a2e 40%, #16213e 70%, #0f3460 100%);
+}
+
+/* ============================================
+   Mode: Random Image
+   ============================================ */
+.dh-random-image {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+.dh-bg-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.dh-bg-fallback {
+	background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+}
+
+.dh-refresh-btn {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 0, 0, 0.4);
+	border-radius: 50%;
+	color: rgba(255, 255, 255, 0.7);
+	cursor: pointer;
+	transition: background 0.2s, color 0.2s;
+	z-index: 5;
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+}
+
+.dh-refresh-btn:hover {
+	background: rgba(0, 0, 0, 0.6);
+	color: #fff;
+}
+
+/* ============================================
+   Mode: Image Gallery (Masonry)
+   ============================================ */
+.dh-gallery-wall {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+	background: #0d0d0d;
+}
+
+.dh-gallery-masonry {
+	columns: 4;
+	column-gap: 6px;
+	padding: 6px;
+	will-change: transform;
+}
+
+@media (max-width: 800px) {
+	.dh-gallery-masonry {
+		columns: 3;
+	}
+}
+
+@media (max-width: 500px) {
+	.dh-gallery-masonry {
+		columns: 2;
+	}
+}
+
+.dh-gallery-cell {
+	break-inside: avoid;
+	margin-bottom: 6px;
+	border-radius: 6px;
+	overflow: hidden;
+	background: rgba(255, 255, 255, 0.03);
+	line-height: 0;
+}
+
+.dh-gallery-cell img {
+	width: 100%;
+	height: auto;
+	display: block;
+	object-fit: cover;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}
+
+.dh-gallery-cell img[src] {
+	opacity: 1;
+}
+
+
+/* ============================================
+   Mode: Matrix Rain
+   ============================================ */
+.dh-matrix-canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+/* ============================================
+   Mode: Ambient Particles
+   ============================================ */
+.dh-particles-canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+/* ============================================
+   Optional dim overlay (toggled per mode)
+   ============================================ */
+.dh-background-dim::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: radial-gradient(
+		ellipse at center,
+		rgba(0, 0, 0, 0.3) 0%,
+		rgba(0, 0, 0, 0.6) 100%
+	);
+	pointer-events: none;
+	z-index: 2;
+}
