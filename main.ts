@@ -13,38 +13,38 @@ export default class DynamicHomePlugin extends Plugin {
 		this.registerExtensions([DYNAMIC_HOME_EXTENSION], VIEW_TYPE_DYNAMIC_HOME);
 
 		this.addRibbonIcon('home', 'Dynamic Home', () => {
-			this.openHome();
+			void this.openHome();
 		});
 
 		this.addCommand({
-			id: 'open-dynamic-home',
-			name: 'Open Dynamic Home',
-			callback: () => this.openHome(),
+			id: 'open-home',
+			name: 'Open home',
+			callback: () => void this.openHome(),
 		});
 
 		this.addCommand({
-			id: 'open-dynamic-home-new-tab',
-			name: 'Open Dynamic Home in new tab',
-			callback: () => this.openHome(true),
+			id: 'open-home-new-tab',
+			name: 'Open home in new tab',
+			callback: () => void this.openHome(true),
 		});
 
 		this.addCommand({
 			id: 'create-home-file',
-			name: 'Create Home file',
-			callback: () => this.createHomeFile(),
+			name: 'Create home file',
+			callback: () => void this.createHomeFile(),
 		});
 
 		this.addSettingTab(new DynamicHomeSettingTab(this.app, this));
 
 		this.app.workspace.onLayoutReady(() => {
 			if (this.settings.openOnStartup) {
-				this.openHome();
+				void this.openHome();
 			}
 		});
 	}
 
-	async onunload(): Promise<void> {
-		this.app.workspace.detachLeavesOfType(VIEW_TYPE_DYNAMIC_HOME);
+	onunload(): void {
+		// No cleanup needed — Obsidian manages leaf lifecycle
 	}
 
 	async openHome(newTab = false): Promise<void> {
@@ -64,7 +64,6 @@ export default class DynamicHomePlugin extends Plugin {
 	async createHomeFile(): Promise<TFile | null> {
 		const existing = this.findHomeFile();
 		if (existing) {
-			// Open the existing file instead of creating a duplicate
 			const leaf = this.app.workspace.getLeaf(false);
 			await leaf.openFile(existing);
 			return existing;

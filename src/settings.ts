@@ -3,11 +3,11 @@ import type DynamicHomePlugin from '../main';
 import { VisualMode, ModeOverlaySettings, MODE_OVERLAY_DEFAULTS, getOverlayForMode } from './types';
 
 const MODE_LABELS: Record<string, string> = {
-	[VisualMode.ClockGreeting]: 'Clock & Greeting',
-	[VisualMode.RandomImage]: 'Random Image',
-	[VisualMode.ImageGallery]: 'Image Gallery',
-	[VisualMode.MatrixRain]: 'Matrix Rain',
-	[VisualMode.AmbientParticles]: 'Ambient Particles',
+	[VisualMode.ClockGreeting]: 'Clock & greeting',
+	[VisualMode.RandomImage]: 'Random image',
+	[VisualMode.ImageGallery]: 'Image gallery',
+	[VisualMode.MatrixRain]: 'Matrix rain',
+	[VisualMode.AmbientParticles]: 'Ambient particles',
 };
 
 export class DynamicHomeSettingTab extends PluginSettingTab {
@@ -24,17 +24,16 @@ export class DynamicHomeSettingTab extends PluginSettingTab {
 
 		const mode = this.plugin.settings.visualMode;
 
-		// -- Visual Mode --
 		new Setting(containerEl)
 			.setName('Visual mode')
 			.setDesc('Choose the background visual for your home page')
 			.addDropdown((dropdown) =>
 				dropdown
-					.addOption(VisualMode.ClockGreeting, 'Clock & Greeting')
-					.addOption(VisualMode.RandomImage, 'Random Image')
-					.addOption(VisualMode.ImageGallery, 'Image Gallery')
-					.addOption(VisualMode.MatrixRain, 'Matrix Rain')
-					.addOption(VisualMode.AmbientParticles, 'Ambient Particles')
+					.addOption(VisualMode.ClockGreeting, 'Clock & greeting')
+					.addOption(VisualMode.RandomImage, 'Random image')
+					.addOption(VisualMode.ImageGallery, 'Image gallery')
+					.addOption(VisualMode.MatrixRain, 'Matrix rain')
+					.addOption(VisualMode.AmbientParticles, 'Ambient particles')
 					.setValue(mode)
 					.onChange(async (value) => {
 						this.plugin.settings.visualMode = value as VisualMode;
@@ -43,8 +42,7 @@ export class DynamicHomeSettingTab extends PluginSettingTab {
 					})
 			);
 
-		// -- General --
-		containerEl.createEl('h3', { text: 'General' });
+		new Setting(containerEl).setName('General').setHeading();
 
 		new Setting(containerEl)
 			.setName('Greeting name')
@@ -74,7 +72,7 @@ export class DynamicHomeSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('Open on startup')
-			.setDesc('Automatically open Dynamic Home when Obsidian starts')
+			.setDesc('Automatically open home when Obsidian starts')
 			.addToggle((toggle) =>
 				toggle
 					.setValue(this.plugin.settings.openOnStartup)
@@ -84,8 +82,7 @@ export class DynamicHomeSettingTab extends PluginSettingTab {
 					})
 			);
 
-		// -- Overlay options for current mode --
-		containerEl.createEl('h3', { text: `${MODE_LABELS[mode]} — Overlay` });
+		new Setting(containerEl).setName(`${MODE_LABELS[mode]} — overlay`).setHeading();
 
 		const overlaySettings = getOverlayForMode(this.plugin.settings, mode);
 
@@ -138,7 +135,6 @@ export class DynamicHomeSettingTab extends PluginSettingTab {
 					})
 			);
 
-		// Recent files count (only if recent files enabled for any mode)
 		new Setting(containerEl)
 			.setName('Recent files count')
 			.setDesc('Number of recent files to display')
@@ -153,8 +149,7 @@ export class DynamicHomeSettingTab extends PluginSettingTab {
 					})
 			);
 
-		// -- Quick Links --
-		containerEl.createEl('h3', { text: 'Quick Links' });
+		new Setting(containerEl).setName('Quick links').setHeading();
 
 		for (let i = 0; i < this.plugin.settings.quickLinks.length; i++) {
 			const link = this.plugin.settings.quickLinks[i];
@@ -201,9 +196,8 @@ export class DynamicHomeSettingTab extends PluginSettingTab {
 				})
 		);
 
-		// -- Mode-specific visual settings --
 		if (mode === VisualMode.RandomImage) {
-			containerEl.createEl('h3', { text: 'Random Image' });
+			new Setting(containerEl).setName('Random image').setHeading();
 			new Setting(containerEl)
 				.setName('Image URL')
 				.setDesc('URL to fetch a random image. A cache-buster is appended automatically.')
@@ -219,7 +213,7 @@ export class DynamicHomeSettingTab extends PluginSettingTab {
 		}
 
 		if (mode === VisualMode.ImageGallery) {
-			containerEl.createEl('h3', { text: 'Image Gallery' });
+			new Setting(containerEl).setName('Image gallery').setHeading();
 			new Setting(containerEl)
 				.setName('Image URLs')
 				.setDesc('One URL per line. If empty, demo images will be used.')
@@ -238,7 +232,7 @@ export class DynamicHomeSettingTab extends PluginSettingTab {
 		}
 
 		if (mode === VisualMode.AmbientParticles) {
-			containerEl.createEl('h3', { text: 'Ambient Particles' });
+			new Setting(containerEl).setName('Ambient particles').setHeading();
 			new Setting(containerEl)
 				.setName('Particle color')
 				.setDesc('Hex color for particles and connections')

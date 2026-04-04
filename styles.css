@@ -2,6 +2,11 @@
    Dynamic Home Plugin
    ============================================ */
 
+/* Utility */
+.dh-hidden {
+	display: none;
+}
+
 /* Root & Container */
 .dh-root {
 	padding: 0 !important;

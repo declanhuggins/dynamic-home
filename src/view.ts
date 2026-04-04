@@ -1,4 +1,4 @@
-import { TextFileView, WorkspaceLeaf, TFile } from 'obsidian';
+import { TextFileView, WorkspaceLeaf, TFile, setIcon } from 'obsidian';
 import type DynamicHomePlugin from '../main';
 import { ModeRenderer, VisualMode, getOverlayForMode } from './types';
 import { RandomImageRenderer } from './modes/random-image';
@@ -55,12 +55,13 @@ export class DynamicHomeView extends TextFileView {
 		this.contentEl.empty();
 	}
 
-	async onClose(): Promise<void> {
+	onClose(): Promise<void> {
 		this.destroyCurrentMode();
 		if (this.clockIntervalId !== null) {
 			window.clearInterval(this.clockIntervalId);
 			this.clockIntervalId = null;
 		}
+		return Promise.resolve();
 	}
 
 	refresh(): void {
@@ -178,7 +179,7 @@ export class DynamicHomeView extends TextFileView {
 			const searchWrapper = searchSection.createDiv({ cls: 'dh-search-wrapper' });
 
 			const searchIcon = searchWrapper.createDiv({ cls: 'dh-search-icon' });
-			searchIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>`;
+			setIcon(searchIcon, 'search');
 
 			const searchInput = searchWrapper.createEl('input', {
 				cls: 'dh-search-input',
@@ -201,7 +202,7 @@ export class DynamicHomeView extends TextFileView {
 					const item = resultsEl.createDiv({ cls: 'dh-search-result-item' });
 					item.textContent = file.basename;
 					item.addEventListener('click', () => {
-						this.app.workspace.openLinkText(file.path, '', false);
+						void this.app.workspace.openLinkText(file.path, '', false);
 					});
 				}
 			});
@@ -226,7 +227,7 @@ export class DynamicHomeView extends TextFileView {
 				const btn = linksSection.createDiv({ cls: 'dh-quick-link' });
 				btn.textContent = link.name;
 				btn.addEventListener('click', () => {
-					this.app.workspace.openLinkText(link.path, '', false);
+					void this.app.workspace.openLinkText(link.path, '', false);
 				});
 			}
 		}
@@ -234,10 +235,11 @@ export class DynamicHomeView extends TextFileView {
 		// Recent files
 		if (overlay.showRecentFiles) {
 			const recentSection = parent.createDiv({ cls: 'dh-recent-section' });
-			recentSection.createDiv({ cls: 'dh-recent-title', text: 'Recent Files' });
+			recentSection.createDiv({ cls: 'dh-recent-title', text: 'Recent files' });
 			const recentList = recentSection.createDiv({ cls: 'dh-recent-list' });
 
-			const recentPaths = (this.app.workspace as any).getLastOpenFiles?.() as string[] | undefined;
+			const workspace = this.app.workspace as WorkspaceWithRecent;
+			const recentPaths = workspace.getLastOpenFiles?.() as string[] | undefined;
 			if (recentPaths) {
 				const displayed = recentPaths.slice(0, settings.recentFilesCount);
 				for (const path of displayed) {
@@ -246,7 +248,7 @@ export class DynamicHomeView extends TextFileView {
 						const item = recentList.createDiv({ cls: 'dh-recent-item' });
 						item.textContent = file.basename;
 						item.addEventListener('click', () => {
-							this.app.workspace.openLinkText(path, '', false);
+							void this.app.workspace.openLinkText(path, '', false);
 						});
 					}
 				}
@@ -286,4 +288,8 @@ export class DynamicHomeView extends TextFileView {
 			this.currentRenderer = null;
 		}
 	}
+}
+
+interface WorkspaceWithRecent {
+	getLastOpenFiles?: () => string[];
 }

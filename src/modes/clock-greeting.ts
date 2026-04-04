@@ -6,9 +6,7 @@ export class ClockGreetingRenderer implements ModeRenderer {
 	render(container: HTMLElement): void {
 		this.container = container;
 		container.empty();
-		// Just renders the background gradient — the clock/greeting
-		// content is handled by the overlay in view.ts
-		const bg = container.createDiv({ cls: 'dh-clock-mode-bg' });
+		container.createDiv({ cls: 'dh-clock-mode-bg' });
 	}
 
 	destroy(): void {
