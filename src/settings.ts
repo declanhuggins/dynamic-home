@@ -42,7 +42,7 @@ export class DynamicHomeSettingTab extends PluginSettingTab {
 					})
 			);
 
-		new Setting(containerEl).setName('General').setHeading();
+		new Setting(containerEl).setName('Configuration').setHeading();
 
 		new Setting(containerEl)
 			.setName('Greeting name')
@@ -203,7 +203,6 @@ export class DynamicHomeSettingTab extends PluginSettingTab {
 				.setDesc('URL to fetch a random image. A cache-buster is appended automatically.')
 				.addText((text) =>
 					text
-						.setPlaceholder('https://picsum.photos/1920/1080')
 						.setValue(this.plugin.settings.randomImageUrl)
 						.onChange(async (value) => {
 							this.plugin.settings.randomImageUrl = value;
@@ -215,7 +214,7 @@ export class DynamicHomeSettingTab extends PluginSettingTab {
 		if (mode === VisualMode.ImageGallery) {
 			new Setting(containerEl).setName('Image gallery').setHeading();
 			new Setting(containerEl)
-				.setName('Image URLs')
+				.setName('Image urls')
 				.setDesc('One URL per line. If empty, demo images will be used.')
 				.addTextArea((text) =>
 					text

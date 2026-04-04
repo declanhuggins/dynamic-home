@@ -12,7 +12,7 @@ export default class DynamicHomePlugin extends Plugin {
 		this.registerView(VIEW_TYPE_DYNAMIC_HOME, (leaf) => new DynamicHomeView(leaf, this));
 		this.registerExtensions([DYNAMIC_HOME_EXTENSION], VIEW_TYPE_DYNAMIC_HOME);
 
-		this.addRibbonIcon('home', 'Dynamic Home', () => {
+		this.addRibbonIcon('home', 'Open home', () => {
 			void this.openHome();
 		});
 
@@ -92,7 +92,8 @@ export default class DynamicHomePlugin extends Plugin {
 	}
 
 	async loadSettings(): Promise<void> {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		const data = await this.loadData() as Partial<DynamicHomeSettings> | null;
+		this.settings = Object.assign({}, DEFAULT_SETTINGS, data ?? {});
 	}
 
 	async saveSettings(): Promise<void> {

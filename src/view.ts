@@ -239,7 +239,7 @@ export class DynamicHomeView extends TextFileView {
 			const recentList = recentSection.createDiv({ cls: 'dh-recent-list' });
 
 			const workspace = this.app.workspace as WorkspaceWithRecent;
-			const recentPaths = workspace.getLastOpenFiles?.() as string[] | undefined;
+			const recentPaths = workspace.getLastOpenFiles?.();
 			if (recentPaths) {
 				const displayed = recentPaths.slice(0, settings.recentFilesCount);
 				for (const path of displayed) {
